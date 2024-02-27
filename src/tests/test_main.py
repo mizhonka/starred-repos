@@ -12,4 +12,4 @@ def test_render_index_when_not_logged_in():
 def test_render_logged_when_logged_in():
     response=client.get('/?code=1234')
     assert response.status_code==200
-    assert "You are now logged in" in response.text
+    assert "Welcome" in response.text
