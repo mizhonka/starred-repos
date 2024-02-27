@@ -11,12 +11,17 @@ config = dotenv_values()
 login_url = 'https://github.com/login/oauth/authorize?client_id=' + \
     config.get('CLIENT_ID')
 
-templates = Jinja2Templates(directory="templates")
+templates = Jinja2Templates(directory="src/templates")
 
 
 @app.get('/', response_class=HTMLResponse)
 def index(request: Request):
     """renders homepage"""
+    code=""
+    print(code)
+    if 'code' in request.query_params:
+        code=request.query_params['code']
+        return templates.TemplateResponse(name='logged.html', request=request)
     return templates.TemplateResponse(name='index.html', request=request)
 
 
@@ -24,9 +29,3 @@ def index(request: Request):
 def login():
     """redirects to login screen"""
     return RedirectResponse(login_url)
-
-
-@app.get('/success')
-def success():
-    """redirects to a success message after logging in"""
-    return {'login': 'completed'}
