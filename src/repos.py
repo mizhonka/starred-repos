@@ -1,4 +1,4 @@
-"""module containing Repos class"""
+"""module containing 'Repos' class"""
 
 class Repos:
     """class for storing starred repositories"""
@@ -14,3 +14,7 @@ class Repos:
     def get(self):
         """returns the list of json objects"""
         return self._json_repos
+
+    def empty(self):
+        """clears the list of json objects"""
+        self._json_repos=[]

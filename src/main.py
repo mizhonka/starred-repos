@@ -1,11 +1,12 @@
 """main program"""
 import requests
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, Request, HTTPException
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import RedirectResponse
 from fastapi.responses import HTMLResponse
 from dotenv import dotenv_values
 from .repos import Repos
+from .access_token import AccessToken
 
 app = FastAPI()
 
@@ -17,6 +18,14 @@ templates = Jinja2Templates(directory="src/templates")
 templates.env.autoescape=False
 
 starredRepos=Repos()
+accessToken=AccessToken()
+
+@app.get('/logout')
+def logout():
+    """resets accessToken and starredRepos and redirects to login page"""
+
+    accessToken.remove()
+    return RedirectResponse('/')
 
 @app.get('/', response_class=HTMLResponse)
 def index(request: Request):
@@ -33,9 +42,13 @@ def get_user_data(request: Request):
     """gets user data from github api and renders html page to display it"""
 
     base_url='https://api.github.com/user/starred'
-    token=request.query_params['access_token']
+    token=accessToken.get()
+    if not token:
+        raise HTTPException(status_code=401, detail='Unauthorized: You need to be logged in')
     response=requests.get(base_url, headers={'Authorization':'Bearer ' + token}, timeout=5)
+    print(response)
     result=response.json()
+    starredRepos.empty()
     for r in result:
         info={
             'name': r['name'],
@@ -64,8 +77,8 @@ def get_access_token(request: Request):
     code=request.query_params['code']
     access_url=base_url+'?client_id='+CLIENT_ID+'&client_secret='+CLIENT_SECRET+'&code='+code
     response=requests.get(access_url, headers={'Accept': 'application/json'}, timeout=5)
-    token=response.json()['access_token']
-    return RedirectResponse('/get_user_data?access_token='+token)
+    accessToken.set(response.json()['access_token'])
+    return RedirectResponse('/get_user_data')
 
 @app.get('/login')
 def login():

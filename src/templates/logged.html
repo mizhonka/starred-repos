@@ -6,6 +6,9 @@
     <form action="/return_json" method="get">
         <input type="submit" value="Get JSON">
     </form>
+    <form action="/logout" method="get">
+        <input type="submit" value="Log Out">
+    </form>
     {%for repo in stars%}
         <h3><a href="{{repo['url']}}">{{repo['name']}}</a></h3>
         {%if repo['description']%}
