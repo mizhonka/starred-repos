@@ -4,9 +4,7 @@
 
 With this web-app, you can view your starred repositories on GitHub, and export them in a JSON format.
 
-## Installation
-
-### Linux
+## Installation (Linux & Windows)
 
 1. Clone this repository and navigate to the root directory
 2. Create _.env_ file with the following contents:
@@ -16,17 +14,23 @@ With this web-app, you can view your starred repositories on GitHub, and export 
    ```
 3. Create a virtual environment with
    ```
-   python3 -m venv venv
+   python3 -m venv venv 
    ```
 4. Enter virtual environment with
+   
+   Linux:
    ```
    source venv/bin/activate
    ```
-6. Install dependencies with
+   Windows:
+   ```
+   venv\Scripts\activate
+   ```
+5. Install dependencies with
    ```
    pip install -r requirements.txt 
    ```
-7. Run application with
+6. Run application with
    ```
    uvicorn src.main:app
    ```
