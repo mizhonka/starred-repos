@@ -2,5 +2,25 @@
     <title>Starred Repos</title>
 </head>
 <body>
-    <p>Welcome, {{name}}!</p>
+    <h2>You have {{count}} starred repositories:</h2>
+    <form action="/return_json" method="get">
+        <input type="submit" value="Get JSON">
+    </form>
+    {%for repo in stars%}
+        <h3><a href="{{repo['url']}}">{{repo['name']}}</a></h3>
+        {%if repo['description']%}
+            <i>{{repo['description']}}</i>
+        {%endif%}
+        {%if repo['license']%}
+            <p>{{repo['license']['name']}}</p>
+        {%endif%}
+        {%if repo['topics']%}
+            <p>
+                Topics:
+                {%for t in repo['topics']%}
+                    {{t}},
+                {%endfor%}
+            </p>
+        {%endif%}
+    {%endfor%}
 </body>
