@@ -18,12 +18,12 @@
             <p>{{repo['license']['name']}}</p>
         {%endif%}
         {%if repo['topics']%}
-            <p>
-                Topics:
+            <p>Topics:</p>
+            <ul>
                 {%for t in repo['topics']%}
-                    {{t}},
+                    <li>{{t}}</li>
                 {%endfor%}
-            </p>
+            </ul>
         {%endif%}
     {%endfor%}
 </body>

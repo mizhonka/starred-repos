@@ -22,7 +22,7 @@ accessToken=AccessToken()
 
 @app.get('/logout')
 def logout():
-    """resets accessToken and starredRepos and redirects to login page"""
+    """resets accessToken and redirects to login page"""
 
     accessToken.remove()
     return RedirectResponse('/')
@@ -31,10 +31,13 @@ def logout():
 def index(request: Request):
     """renders homepage"""
 
-    code=""
+    if accessToken.get():
+        return RedirectResponse('/get_user_data')
+
     if 'code' in request.query_params:
         code=request.query_params['code']
         return RedirectResponse('/get_access_token?code='+code)
+
     return templates.TemplateResponse(name='index.html', request=request)
 
 @app.get('/get_user_data')
@@ -46,7 +49,6 @@ def get_user_data(request: Request):
     if not token:
         raise HTTPException(status_code=401, detail='Unauthorized: You need to be logged in')
     response=requests.get(base_url, headers={'Authorization':'Bearer ' + token}, timeout=5)
-    print(response)
     result=response.json()
     starredRepos.empty()
     for r in result:
