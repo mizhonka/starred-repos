@@ -6,17 +6,19 @@ With this web-app, you can view a summary of your starred repositories on GitHub
 
 ## Installation (Linux & Windows)
 
-1. Clone this repository and navigate to the root directory
-2. Create _.env_ file with the following contents:
+1. [Create an OAuth app](https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/creating-an-oauth-app). Homepage / callback URL is the local address where the uvicorn server will run  
+   (http:<span></span>//127.0.0.1:8000 by default)
+2. Clone this repository and navigate to the root directory
+3. Create _.env_ file with the following contents:
    ```
    CLIENT_ID=<your OAuth app Client ID>
    CLIENT_SECRET=<client secret>
    ```
-3. Create a virtual environment with
+4. Create a virtual environment with
    ```
    python3 -m venv venv 
    ```
-4. Enter virtual environment with
+5. Enter virtual environment with
    
    Linux:
    ```
@@ -26,11 +28,11 @@ With this web-app, you can view a summary of your starred repositories on GitHub
    ```
    venv\Scripts\activate
    ```
-5. Install dependencies with
+6. Install dependencies with
    ```
    pip install -r requirements.txt 
    ```
-6. Run application with
+7. Run application with
    ```
    uvicorn src.main:app
    ```
