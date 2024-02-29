@@ -9,7 +9,7 @@
 ### AccessToken
 
 * .get() returns a correct string after .set()
-* .get() returns empty string after .remove()A
+* .get() returns empty string after .remove()
 
 ### Repos
 
