@@ -2,7 +2,7 @@
 
 # Starred Repos
 
-With this web-app, you can view your starred repositories on GitHub, and export them in a JSON format.
+With this web-app, you can view a summary of your starred repositories on GitHub, and export them in a JSON format.
 
 ## Installation (Linux & Windows)
 
