@@ -1,7 +1,7 @@
 name: CI
 
 env:
-  CLIENT_ID: 'a'
+  CLIENT_ID: ${{secrets.CLIENT_ID}}
   CLIENT_SECRET: ${{secrets.CLIENT_SECRET}}
 
 on:
@@ -20,6 +20,11 @@ jobs:
         python-version: '3.9'
         cache: 'pip' # caching pip dependencies
     - run: pip install -r requirements.txt
+    - name: Create .env file
+      run: |
+        touch .env
+        echo CLIENT_ID=${{secrets.CLIENT_ID}} >> .env
+        echo CLIENT_SECRET=${{secrets.CLIENT_SECRET}} >> .env
     - name: Run autopep8
       run: autopep8 --in-place --recursive src
     - name: Run pylint
