@@ -70,7 +70,6 @@ def return_json():
 
     return starredRepos.get()
 
-
 @app.get('/get_access_token')
 def get_access_token(request: Request):
     """gets oauth access token and redirects to fetch user data"""
@@ -79,6 +78,8 @@ def get_access_token(request: Request):
     code=request.query_params['code']
     access_url=base_url+'?client_id='+CLIENT_ID+'&client_secret='+CLIENT_SECRET+'&code='+code
     response=requests.get(access_url, headers={'Accept': 'application/json'}, timeout=10)
+    if 'error' in response.json():
+        raise HTTPException(status_code=401, detail='Error: Bad verification code')
     accessToken.set(response.json()['access_token'])
     return RedirectResponse('/get_user_data')
 
