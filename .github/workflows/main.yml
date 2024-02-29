@@ -20,3 +20,6 @@ jobs:
       run: autopep8 --in-place --recursive src
     - name: Run pylint
       run: pylint src
+    - name: Run non-local tests
+      run: pytest src/tests/access_token_test.py
+      run: pytest src/tests/repos_test.py
