@@ -8,10 +8,20 @@ client=TestClient(app)
 config = dotenv_values()
 CLIENT_ID=config.get('CLIENT_ID')
 
-def test_homepage_renders_login_when_not_logged_in():
+def test_index_renders_login_when_not_logged_in():
     response=client.get('/')
     assert response.status_code==200
     assert 'Please login through Github to continue' in response.text
+
+def test_logout_redirects_to_login_page():
+    response=client.get('/logout')
+    assert response.status_code==200
+    assert 'Please login through Github to continue' in response.text
+
+def test_return_json_when_not_logged_in_returns_empty():
+    response=client.get('/return_json')
+    assert response.status_code==200
+    assert response.json()==[]
 
 def test_get_user_data_error_without_access_token():
     response=client.get('/get_user_data')
@@ -23,7 +33,7 @@ def test_get_access_token_error_when_code_is_invalid():
     assert response.status_code==401
     assert response.json()=={'detail': 'Error: Bad verification code'}
 
-def test_homepage_error_when_code_is_invalid():
+def test_index_error_when_code_is_invalid():
     response=client.get('/?code=123')
     assert response.status_code==401
     assert response.json()=={'detail': 'Error: Bad verification code'}
