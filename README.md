@@ -36,3 +36,25 @@ With this web-app, you can view a summary of your starred repositories on GitHub
    ```
    uvicorn src.main:app
    ```
+
+## Testing
+
+To run tests and generate a coverage report, run
+```
+coverage run -m pytest src/tests/
+```
+inside the virtual environment.  
+
+To print out a coverage report, run
+```
+coverage report
+```
+or for a HTML-format
+```
+coverage html
+```
+
+See pylint-scoring with
+```
+pylint src
+```
