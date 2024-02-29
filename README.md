@@ -39,6 +39,8 @@ With this web-app, you can view a summary of your starred repositories on GitHub
 
 ## Testing
 
+[Testing Document](https://github.com/mizhonka/starred-repos/blob/main/documentation/test_document.md)
+
 To run tests and generate a coverage report, run
 ```
 coverage run -m pytest src/tests/
